@@ -12,8 +12,11 @@
   },
   "dependencies": {
     "@hocuspocus/provider": "^3.4.3",
+    "@tiptap/extension-bubble-menu": "^3.14.0",
+    "@tiptap/extension-character-count": "^3.14.0",
     "@tiptap/extension-collaboration": "^3.14.0",
     "@tiptap/extension-collaboration-caret": "^3.14.0",
+    "@tiptap/extension-color": "^3.14.0",
     "@tiptap/extension-highlight": "^3.14.0",
     "@tiptap/extension-image": "^3.14.0",
     "@tiptap/extension-link": "^3.14.0",
@@ -30,8 +33,6 @@
     "pinia": "^3.0.4",
     "vue": "^3.2.13",
     "vue-router": "^4.6.3",
-    "y-protocols": "^1.0.7",
-    "y-websocket": "^3.0.0",
     "yjs": "^13.6.28"
   },
   "devDependencies": {

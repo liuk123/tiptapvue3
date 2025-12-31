@@ -10,7 +10,7 @@
 <script setup>
 import Tiptap from '../components/Tiptap.vue'
 
-import { TiptapCollabProvider } from '@hocuspocus/provider'
+import { HocuspocusProvider } from '@hocuspocus/provider'
 import * as Y from 'yjs'
 
 const appId = '7j9y6m10'
@@ -21,18 +21,21 @@ const room = `room.${new Date()
 
 // ydoc and provider for Editor A
 const ydocA = new Y.Doc()
-const providerA = new TiptapCollabProvider({
+const providerA = new HocuspocusProvider({
   appId,
   name: room,
   document: ydocA,
+  url: 'ws://127.0.0.1:1234',
+
 })
 
 // ydoc and provider for Editor B
 const ydocB = new Y.Doc()
-const providerB = new TiptapCollabProvider({
+const providerB = new HocuspocusProvider({
   appId,
   name: room,
   document: ydocB,
+  url: 'ws://127.0.0.1:1234',
 })
 </script>
 
