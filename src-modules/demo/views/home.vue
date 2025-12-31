@@ -8,7 +8,7 @@
   </div>
 </template>
 <script setup>
-import Tiptap from '../components/Tiptap.vue'
+import Tiptap from '../components/tiptap/Tiptap.vue'
 
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import * as Y from 'yjs'
@@ -41,7 +41,7 @@ const providerB = new HocuspocusProvider({
   name: room,
   document: ydocB,
   url: 'ws://127.0.0.1:1234',
-  token: 'readonly',
+  token: 'write', // readonly
   onAuthenticated: (provider) => {
     console.log('onAuthenticated2', provider)
 
@@ -62,4 +62,7 @@ const providerB = new HocuspocusProvider({
   margin: 0 0 12px;
   color: #64748b;
 }
+</style>
+<style lang="less">
+  @import '../styles/tiptap.less';
 </style>
