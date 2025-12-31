@@ -178,10 +178,10 @@ const names = [
   'John Cusack', 'Matthew Broderick', 'Justine Bateman', 'Lisa Bonet'
 ]
 
-const defaultContent = `
-  <p>Hi 👋, this is a collaborative document.</p>
-  <p>Feel free to edit and collaborate in real-time!</p>
-`
+// const defaultContent = `
+//   <p>Hi 👋, this is a collaborative document.</p>
+//   <p>Feel free to edit and collaborate in real-time!</p>
+// `
 
 // 随机生成工具函数
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
@@ -242,16 +242,16 @@ const editor = useEditor({
       // class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
     },
   },
-  onCreate: ({ editor: currentEditor }) => {
+  onCreate: () => {
     // 确保内容同步
-    if (props.provider) {
-      props.provider.on('synced', () => {
-        if (currentEditor.isEmpty) {
-          // 只在文档完全为空时设置默认内容（避免覆盖已有内容）
-          currentEditor.commands.setContent(defaultContent)
-        }
-      })
-    }
+    // if (props.provider) {
+    //   props.provider.on('synced', () => {
+    //     if (currentEditor.isEmpty) {
+    //       // 只在文档完全为空时设置默认内容（避免覆盖已有内容）
+    //       currentEditor.commands.setContent(defaultContent)
+    //     }
+    //   })
+    // }
   }
 })
 
@@ -269,7 +269,7 @@ const updateUserInfo = () => {
   localStorage.setItem('currentUser_color', currentUser.value.color)
 }
 
-// 监听 currentUser 变化 (放在 editor 初始化之后)
+// 监听 currentUser 变化
 watch(
   () => currentUser.value,
   (newUser) => {

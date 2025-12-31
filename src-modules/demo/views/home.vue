@@ -26,6 +26,11 @@ const providerA = new HocuspocusProvider({
   name: room,
   document: ydocA,
   url: 'ws://127.0.0.1:1234',
+  token: 'write',
+  onAuthenticated: (provider) => {
+    console.log('onAuthenticated1', provider)
+
+  }
 
 })
 
@@ -36,6 +41,11 @@ const providerB = new HocuspocusProvider({
   name: room,
   document: ydocB,
   url: 'ws://127.0.0.1:1234',
+  token: 'readonly',
+  onAuthenticated: (provider) => {
+    console.log('onAuthenticated2', provider)
+
+  }
 })
 </script>
 
