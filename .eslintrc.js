@@ -19,8 +19,13 @@ module.exports = {
     'vue'
   ],
   rules: {
-    // 自定义规则
-    'vue/multi-word-component-names': 'off', // 允许单文件组件名
-    'no-unused-vars': 'warn',
+    'vue/multi-word-component-names': 'off',
+    'vue/no-v-html': 'off',
+    'vue/require-prop-types': 'off',
+    'vue/require-default-prop': 'off',
+    'no-console': 'off',
+    'no-debugger': 'warn',
+    'no-unused-vars': 'off',
+    'max-len': 'off',
   },
 };

@@ -1,4 +1,7 @@
 .tiptap {
+  :first-child {
+    margin-top: 0;
+  }
 
   /* Give a remote user a caret */
   .collaboration-carets__caret {
@@ -26,6 +29,7 @@
     user-select: none;
     white-space: nowrap;
   }
+
 
   [data-resize-handle] {
     position: absolute;
@@ -111,4 +115,134 @@
     outline: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 0.125rem;
   }
+
+
+
 }
+
+/* Bubble menu */
+.bubble-menu {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.7rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  display: flex;
+  padding: 0.2rem;
+  z-index: 20;
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: inherit;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+    &.is-active {
+      background-color: #e5e5e5;
+
+      &:hover {
+        background-color: #d5d5d5;
+      }
+    }
+  }
+}
+
+/* Floating menu */
+.floating-menu {
+  display: flex;
+  background-color: #fff;
+  padding: 0.1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: inherit;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+    &.is-active {
+      background-color: #e5e5e5;
+
+      &:hover {
+        background-color: #d5d5d5;
+      }
+    }
+  }
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  background: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.7rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  overflow: auto;
+  padding: 0.4rem;
+  position: relative;
+
+  button {
+    align-items: center;
+    background-color: transparent;
+    display: flex;
+    gap: 0.25rem;
+    text-align: left;
+    width: 100%;
+    border: none;
+
+    &:hover,
+    &:hover.is-selected {
+      background-color: #f5f5f5;
+    }
+
+    &.is-selected {
+      background-color: #e5e5e5;
+    }
+  }
+}
+
+::selection {
+  background-color: #70cff850;
+}
+
+.ProseMirror-selectednode {
+  outline: 3px solid purple;
+}
+
+// .ProseMirror-noderangeselection {
+//   *::selection {
+//     background: transparent;
+//   }
+
+//   * {
+//     caret-color: transparent;
+//   }
+// }
+
+// .ProseMirror-selectednode,
+// .ProseMirror-selectednoderange {
+//   position: relative;
+
+//   &::before {
+//     position: absolute;
+//     pointer-events: none;
+//     z-index: -1;
+//     content: '';
+//     top: -0.25rem;
+//     left: -0.25rem;
+//     right: -0.25rem;
+//     bottom: -0.25rem;
+//     background-color: #70cff850;
+//     border-radius: 0.2rem;
+//   }
+// }

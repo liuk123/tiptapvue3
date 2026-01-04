@@ -63,6 +63,18 @@
           :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
           H3
         </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
+          H4
+        </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
+          H5
+        </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
+          H6
+        </button>
         <button @click="editor.chain().focus().toggleBulletList().run()"
           :class="{ 'is-active': editor.isActive('bulletList') }">
           Bullet list
@@ -89,10 +101,10 @@
         </button>
         <button @click="editor.chain().focus().setHorizontalRule().run()">Horizontal rule</button>
         <button @click="editor.chain().focus().setHardBreak().run()">Hard break</button>
-        <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().undo()">
+        <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
           Undo
         </button>
-        <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().redo()">
+        <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
           Redo
         </button>
         <button @click="setLink" :class="{ 'is-active': editor.isActive('link') }">链接</button>
@@ -101,11 +113,15 @@
     </div>
 
     <!-- 编辑器内容区域 -->
+    <editor-bubble-menu :editor="editor" />
+    <drag-handle :editor="editor">
+      <div class="custom-drag-handle" />
+    </drag-handle>
     <editor-content :editor="editor" class="editor-content" />
 
     <div class="editor-footer" v-if="editor">
       <div class="character-count">
-        {{ editor.storage.characterCount.characters() }} 字符
+        {{ editor.storage.characterCount.characters() }}/{{ props.limit }} 字符
         |
         {{ editor.storage.characterCount.words() }} 单词
       </div>
@@ -115,7 +131,20 @@
 
 <script setup>
 import { useEditor, EditorContent } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
+import Document from '@tiptap/extension-document'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import Bold from '@tiptap/extension-bold'
+import Italic from '@tiptap/extension-italic'
+import Strike from '@tiptap/extension-strike'
+import Code from '@tiptap/extension-code'
+import CodeBlock from '@tiptap/extension-code-block'
+import Blockquote from '@tiptap/extension-blockquote'
+import Heading from '@tiptap/extension-heading'
+import BulletList from '@tiptap/extension-bullet-list'
+import OrderedList from '@tiptap/extension-ordered-list'
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
+import HardBreak from '@tiptap/extension-hard-break'
 import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -125,12 +154,20 @@ import { ListItem } from '@tiptap/extension-list'
 import { Color } from '@tiptap/extension-color'
 import { TextStyle } from '@tiptap/extension-text-style'
 import Highlight from '@tiptap/extension-highlight'
+import BubbleMenu from '@tiptap/extension-bubble-menu'
 import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCaret from '@tiptap/extension-collaboration-caret'
 import CharacterCount from '@tiptap/extension-character-count'
-import CollaborationHistory from './extensions/CollaborationHistory.js'
+import EditorBubbleMenu from './components/EditorBubbleMenu.vue'
+import Commands from './components/slash/commands.js'
+import suggestion from './components/slash/suggestion.js'
+
 import { ref, onMounted, onBeforeUnmount, computed, defineProps, watch } from 'vue'
-import * as Y from 'yjs'
+import DragHandle from '@tiptap/extension-drag-handle-vue-3'
+import FileHandler from '@tiptap/extension-file-handler'
+import { Gapcursor } from '@tiptap/extensions'
+import Typography from '@tiptap/extension-typography'
+
 
 
 // Props 定义
@@ -147,6 +184,11 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  limit: {
+    type: Number,
+    required: false,
+    default: 100000,
+  }
 })
 
 
@@ -166,11 +208,6 @@ const names = [
   'Emilio Estevez', 'Ralph Macchio', 'Rob Lowe', 'Jennifer Grey', 'Mickey Rourke',
   'John Cusack', 'Matthew Broderick', 'Justine Bateman', 'Lisa Bonet'
 ]
-
-// const defaultContent = `
-//   <p>Hi 👋, this is a collaborative document.</p>
-//   <p>Feel free to edit and collaborate in real-time!</p>
-// `
 
 // 随机生成工具函数
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
@@ -194,9 +231,6 @@ const statusText = computed(() => {
     default: return '未知状态'
   }
 })
-console.log(props.ydoc.getXmlFragment('body'))
-const yxmlFragment = props.ydoc.getXmlFragment('prosemirror')
-const undoManager = new Y.UndoManager(yxmlFragment)
 
 
 
@@ -209,14 +243,28 @@ const editor = useEditor({
     disableCollaboration()
   },
   extensions: [
-    StarterKit.configure({
-      history: false, // Collaboration 需要禁用默认 history
-    }),
+    Document,
+    Paragraph,
+    Heading,
+    Text,
+    Bold,
+    Italic,
+    Strike,
+    Code,
+    CodeBlock,
+    Blockquote,
+    BulletList,
+    OrderedList,
+    ListItem,
+    HorizontalRule,
+    HardBreak,
+    Gapcursor,
+    Typography,
     Link.configure({ autolink: true, openOnClick: true, linkOnPaste: true }),
     Image.configure({
       resize: {
         enabled: true,
-        directions: ['top', 'bottom', 'left', 'right'], // can be any direction or diagonal combination
+        // directions: ['top', 'bottom', 'left', 'right'], // can be any direction or diagonal combination
         minWidth: 50,
         minHeight: 50,
         alwaysPreserveAspectRatio: true,
@@ -230,18 +278,58 @@ const editor = useEditor({
     Color.configure({ types: [TextStyle.name, ListItem.name] }),
     TextStyle.configure({ types: [ListItem.name] }),
     Highlight,
+    BubbleMenu,
+    Commands.configure({
+      suggestion,
+    }),
 
-
-    CharacterCount.configure({ limit: 10000 }),
+    CharacterCount.configure({ limit: props.limit }),
     Collaboration.configure({
       document: props.ydoc,
-      // fragment: props.ydoc.getXmlFragment('body'),
     }),
     CollaborationCaret.configure({
       provider: props.provider,
     }),
-    CollaborationHistory.configure({
-      undoManager, // 传入上面创建的实例
+    FileHandler.configure({
+      allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+      onDrop: (currentEditor, files, pos) => {
+        files.forEach(file => {
+          const fileReader = new FileReader()
+
+          fileReader.readAsDataURL(file)
+          fileReader.onload = () => {
+            currentEditor
+              .chain()
+              .insertContentAt(pos, {
+                type: 'image',
+                attrs: {
+                  src: fileReader.result,
+                },
+              })
+              .focus()
+              .run()
+          }
+        })
+      },
+      onPaste: (currentEditor, files) => {
+        files.forEach(file => {
+          const fileReader = new FileReader()
+
+          fileReader.readAsDataURL(file)
+          fileReader.onload = () => {
+            currentEditor
+              .chain()
+              .insertContentAt(currentEditor.state.selection.anchor, {
+                type: 'image',
+                attrs: {
+                  src: fileReader.result,
+                },
+              })
+              .focus()
+              .run()
+          }
+        })
+      },
     }),
   ],
   editorProps: {
@@ -249,16 +337,11 @@ const editor = useEditor({
       // class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
     },
   },
-  onCreate: () => {
-    // 确保内容同步
-    // if (props.provider) {
-    //   props.provider.on('synced', () => {
-    //     if (currentEditor.isEmpty) {
-    //       // 只在文档完全为空时设置默认内容（避免覆盖已有内容）
-    //       currentEditor.commands.setContent(defaultContent)
-    //     }
-    //   })
-    // }
+  onCreate: ({ editor }) => {
+    // 调试：查看 editor 使用的 fragment
+    console.log('Editor initialized. Collaboration extension fragment:', editor.storage)
+    const collaborationFragment = editor.storage.collaboration.fragment
+    console.log('Collaboration Fragment:', collaborationFragment)
   }
 })
 
