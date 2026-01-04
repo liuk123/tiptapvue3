@@ -167,7 +167,8 @@ import DragHandle from '@tiptap/extension-drag-handle-vue-3'
 import FileHandler from '@tiptap/extension-file-handler'
 import { Gapcursor } from '@tiptap/extensions'
 import Typography from '@tiptap/extension-typography'
-
+import NodeRange from '@tiptap/extension-node-range'
+import { Dropcursor } from '@tiptap/extensions'
 
 
 // Props 定义
@@ -260,6 +261,11 @@ const editor = useEditor({
     HardBreak,
     Gapcursor,
     Typography,
+    NodeRange.configure({
+      // allow to select only on depth 0
+      depth: 0,
+      key: null,
+    }),
     Link.configure({ autolink: true, openOnClick: true, linkOnPaste: true }),
     Image.configure({
       resize: {
@@ -279,6 +285,7 @@ const editor = useEditor({
     TextStyle.configure({ types: [ListItem.name] }),
     Highlight,
     BubbleMenu,
+    Dropcursor,
     Commands.configure({
       suggestion,
     }),
@@ -442,7 +449,6 @@ onBeforeUnmount(() => {
 
 <style scoped lang="less">
 .editor-wrapper {
-  background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
@@ -588,7 +594,7 @@ onBeforeUnmount(() => {
 .editor-content {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
 
   :deep(.ProseMirror) {
     outline: none;
