@@ -92,12 +92,13 @@ module.exports={
     module: {
       rules: [
         {
-          test: /\.(png|jpe?g|gif|webp|svg)(\?.*)?$/,
+          test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
           use: [
             {
               loader: 'url-loader',
               options: {
                 limit: 8192, // 小于 8KB 的图片转为 base64
+                esModule: false,
                 fallback: {
                   loader: 'file-loader',
                   options: {

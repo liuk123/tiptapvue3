@@ -2,29 +2,29 @@
   <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" :should-show="shouldShowTextMenu" v-if="editor"
     class="bubble-menu">
     <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-      Bold
+      <Icon :name="toolsIcons.fontStyleBold" :size="18" />
     </button>
     <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-      Italic
+      <Icon :name="toolsIcons.fontStyleItalic" :size="18" />
     </button>
     <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-      Strike
+      <Icon :name="toolsIcons.fontStyleStrike" :size="18" />
     </button>
     <button @click="editor.chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
-      Code
+      <Icon :name="toolsIcons.code" :size="18" />
     </button>
     <button @click="setLink" :class="{ 'is-active': editor.isActive('link') }">
-      Link
+      <Icon :name="toolsIcons.link" :size="18" />
     </button>
   </bubble-menu>
 
   <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" :should-show="shouldShowImageMenu" v-if="editor"
     class="bubble-menu">
     <button @click="editImage" class="bubble-menu-btn">
-      更换图片
+      <Icon :name="toolsIcons.image" :size="18" />
     </button>
     <button @click="setLink" :class="{ 'is-active': editor.isActive('link') }" class="bubble-menu-btn">
-      {{ editor.isActive('link') ? '修改链接' : '添加链接' }}
+      <Icon :name="toolsIcons.imageExtension.link" :size="18" />
     </button>
   </bubble-menu>
 
@@ -57,6 +57,8 @@
 
 <script setup>
 import { BubbleMenu, FloatingMenu } from '@tiptap/vue-3/menus'
+import Icon from '../../common/Icon.vue'
+import { toolsIcons } from '../token/tools-icons.js'
 import { findParentNode, posToDOMRect } from '@tiptap/core'
 import { defineProps } from 'vue'
 

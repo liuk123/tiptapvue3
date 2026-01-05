@@ -8,7 +8,8 @@
     "build:dev": "vue-cli-service build --mode develop",
     "build:prod": "vue-cli-service build --mode production",
     "build:analyze": "cross-env use_analyzer=true vue-cli-service build --mode production",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "copy:icons": "node scripts/copy-icons.js"
   },
   "dependencies": {
     "@hocuspocus/provider": "^3.4.3",

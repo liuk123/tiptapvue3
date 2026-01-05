@@ -25,90 +25,90 @@
     <!-- 编辑器工具栏 -->
     <div v-if="editor" class="control-group">
       <div class="button-group">
-        <button @click="editor.chain().focus().toggleBold().run()"
+        <button @click="editor.chain().focus().toggleBold().run()" title="加粗"
           :disabled="!editor.can().chain().focus().toggleBold().run()"
           :class="{ 'is-active': editor.isActive('bold') }">
-          Bold
+          <Icon :name="toolsIcons.fontStyleBold" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleItalic().run()"
+        <button @click="editor.chain().focus().toggleItalic().run()" title="斜体"
           :disabled="!editor.can().chain().focus().toggleItalic().run()"
           :class="{ 'is-active': editor.isActive('italic') }">
-          Italic
+          <Icon :name="toolsIcons.fontStyleItalic" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleStrike().run()"
+        <button @click="editor.chain().focus().toggleStrike().run()" title="删除线"
           :disabled="!editor.can().chain().focus().toggleStrike().run()"
           :class="{ 'is-active': editor.isActive('strike') }">
-          Strike
+          <Icon :name="toolsIcons.fontStyleStrike" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleCode().run()"
+        <button @click="editor.chain().focus().toggleCode().run()" title="行内代码"
           :disabled="!editor.can().chain().focus().toggleCode().run()"
           :class="{ 'is-active': editor.isActive('code') }">
-          Code
+          <Icon :name="toolsIcons.code" :size="18" />
         </button>
-        <button @click="editor.chain().focus().unsetAllMarks().run()">Clear marks</button>
-        <button @click="editor.chain().focus().clearNodes().run()">Clear nodes</button>
+        <button @click="editor.chain().focus().unsetAllMarks().run()" title="清除标记"><Icon :name="toolsIcons.clear" :size="18" /></button>
+        <button @click="editor.chain().focus().clearNodes().run()" title="清除节点"><Icon :name="toolsIcons.clear" :size="18" /></button>
         <button @click="editor.chain().focus().setParagraph().run()"
           :class="{ 'is-active': editor.isActive('paragraph') }">
-          Paragraph
+          <Icon :name="toolsIcons.fontStylePreview" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+        <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" title="标题1"
           :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
           H1
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+        <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" title="标题2"
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
           H2
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+        <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" title="标题3"
           :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
           H3
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+        <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" title="标题4"
           :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
           H4
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
+        <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" title="标题5"
           :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
           H5
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
+        <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" title="标题6"
           :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
           H6
         </button>
-        <button @click="editor.chain().focus().toggleBulletList().run()"
+        <button @click="editor.chain().focus().toggleBulletList().run()" title="无序列表"
           :class="{ 'is-active': editor.isActive('bulletList') }">
-          Bullet list
+          <Icon :name="toolsIcons.listUnOrdered" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleOrderedList().run()"
+        <button @click="editor.chain().focus().toggleOrderedList().run()" title="有序列表"
           :class="{ 'is-active': editor.isActive('orderedList') }">
-          Ordered list
+          <Icon :name="toolsIcons.listOrdered" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleTaskList().run()"
+        <button @click="editor.chain().focus().toggleTaskList().run()" title="任务列表"
           :class="{ 'is-active': editor.isActive('taskList') }">
-          Task list
+          <Icon :name="toolsIcons.taskList" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleHighlight().run()"
+        <button @click="editor.chain().focus().toggleHighlight().run()" title="高亮"
           :class="{ 'is-active': editor.isActive('highlight') }">
-          Highlight
+          <Icon :name="toolsIcons.textHilite" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleCodeBlock().run()"
+        <button @click="editor.chain().focus().toggleCodeBlock().run()" title="代码块"
           :class="{ 'is-active': editor.isActive('codeBlock') }">
-          Code block
+          <Icon :name="toolsIcons.code" :size="18" />
         </button>
-        <button @click="editor.chain().focus().toggleBlockquote().run()"
+        <button @click="editor.chain().focus().toggleBlockquote().run()" title="引用"
           :class="{ 'is-active': editor.isActive('blockquote') }">
-          Blockquote
+          <Icon :name="toolsIcons.quote" :size="18" />
         </button>
-        <button @click="editor.chain().focus().setHorizontalRule().run()">Horizontal rule</button>
-        <button @click="editor.chain().focus().setHardBreak().run()">Hard break</button>
+        <button @click="editor.chain().focus().setHorizontalRule().run()" title="分割线"><Icon :name="toolsIcons.hr" :size="18" /></button>
+        <button @click="editor.chain().focus().setHardBreak().run()" title="换行"><Icon :name="toolsIcons.outdent" :size="18" /></button>
         <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
-          Undo
+          <Icon :name="toolsIcons.undo" :size="18" />
         </button>
         <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
-          Redo
+          <Icon :name="toolsIcons.redo" :size="18" />
         </button>
-        <button @click="setLink" :class="{ 'is-active': editor.isActive('link') }">链接</button>
-        <button @click="addImage">图片</button>
+        <button @click="setLink" :class="{ 'is-active': editor.isActive('link') }" title="链接"><Icon :name="toolsIcons.link" :size="18" /></button>
+        <button @click="addImage" title="图片"><Icon :name="toolsIcons.image" :size="18" /></button>
       </div>
     </div>
 
@@ -159,6 +159,8 @@ import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCaret from '@tiptap/extension-collaboration-caret'
 import CharacterCount from '@tiptap/extension-character-count'
 import EditorBubbleMenu from './components/EditorBubbleMenu.vue'
+import Icon from '../common/Icon.vue'
+import { toolsIcons } from './token/tools-icons.js'
 import Commands from './components/slash/commands.js'
 import suggestion from './components/slash/suggestion.js'
 
@@ -427,6 +429,7 @@ const addImage = () => {
   const url = window.prompt('请输入图片地址')
   if (!url) return
   editor.value?.chain().focus().setImage({ src: url }).run()
+  // editor.value.commands.setNodeSelection(editor.value.state.selection.anchor);
 }
 
 const updateName = () => {
@@ -562,13 +565,13 @@ onBeforeUnmount(() => {
   .button-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: 0.125rem;
 
     button {
       background: transparent;
       border: 1px solid transparent;
       border-radius: 4px;
-      padding: 0.25rem 0.5rem;
+      padding: .25rem;
       cursor: pointer;
       font-size: 0.9rem;
       color: #495057;
