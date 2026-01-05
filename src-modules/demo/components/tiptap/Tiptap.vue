@@ -53,27 +53,28 @@
         </button>
         <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" title="标题1"
           :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-          H1
+          
+          <Icon :name="toolsIcons.heading1" :size="18" />
         </button>
         <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" title="标题2"
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-          H2
+          <Icon :name="toolsIcons.heading2" :size="18" />
         </button>
         <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" title="标题3"
           :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-          H3
+          <Icon :name="toolsIcons.heading3" :size="18" />
         </button>
         <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" title="标题4"
           :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
-          H4
+          <Icon :name="toolsIcons.heading4" :size="18" />
         </button>
         <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" title="标题5"
           :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
-          H5
+          <Icon :name="toolsIcons.heading5" :size="18" />
         </button>
         <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" title="标题6"
           :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
-          H6
+          <Icon :name="toolsIcons.heading6" :size="18" />
         </button>
         <button @click="editor.chain().focus().toggleBulletList().run()" title="无序列表"
           :class="{ 'is-active': editor.isActive('bulletList') }">

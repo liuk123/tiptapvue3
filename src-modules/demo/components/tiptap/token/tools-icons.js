@@ -48,6 +48,12 @@ export const toolsIcons = {
   fontStyleStrike: 'strikethrough',
   colorSelectorDropdownChevron: 'chevron-down',
   colorSelectorDropdownCheck: 'check',
+  heading1: 'heading-1',
+  heading2: 'heading-2',
+  heading3: 'heading-3',
+  heading4: 'heading-4',
+  heading5: 'heading-5',
+  heading6: 'heading-6',
   imageExtension: {
     link: 'link',
     previewLink: 'arrow-up-right',

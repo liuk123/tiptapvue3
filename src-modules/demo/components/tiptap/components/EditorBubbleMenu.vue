@@ -30,7 +30,8 @@
 
   <bubble-menu v-if="editor" :editor="editor"
     :should-show="() => editor.isActive('bulletList') || editor.isActive('orderedList')"
-    :get-referenced-virtual-element="() =>getListVirtualElement(['bulletList', 'orderedList'])" :options="{ placement: 'top-start', offset: 8 }">
+    :get-referenced-virtual-element="() => getListVirtualElement(['bulletList', 'orderedList'])"
+    :options="{ placement: 'top-start', offset: 8 }">
     <div class="bubble-menu">
       <button type="button" @click="toggleListType">Toggle list type</button>
     </div>
@@ -39,17 +40,46 @@
 
   <floating-menu :editor="editor" v-if="editor">
     <div class="floating-menu">
-      <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+      <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" title="标题1"
         :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-        H1
+
+        <Icon :name="toolsIcons.heading1" :size="18" />
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+      <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" title="标题2"
         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-        H2
+        <Icon :name="toolsIcons.heading2" :size="18" />
       </button>
-      <button @click="editor.chain().focus().toggleBulletList().run()"
+      <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" title="标题3"
+        :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
+        <Icon :name="toolsIcons.heading3" :size="18" />
+      </button>
+      <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" title="标题4"
+        :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
+        <Icon :name="toolsIcons.heading4" :size="18" />
+      </button>
+      <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" title="标题5"
+        :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
+        <Icon :name="toolsIcons.heading5" :size="18" />
+      </button>
+      <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" title="标题6"
+        :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
+        <Icon :name="toolsIcons.heading6" :size="18" />
+      </button>
+      <button @click="editor.chain().focus().toggleBulletList().run()" title="无序列表"
         :class="{ 'is-active': editor.isActive('bulletList') }">
-        Bullet list
+        <Icon :name="toolsIcons.listUnOrdered" :size="18" />
+      </button>
+      <button @click="editor.chain().focus().toggleOrderedList().run()" title="有序列表"
+        :class="{ 'is-active': editor.isActive('orderedList') }">
+        <Icon :name="toolsIcons.listOrdered" :size="18" />
+      </button>
+      <button @click="editor.chain().focus().toggleTaskList().run()" title="任务列表"
+        :class="{ 'is-active': editor.isActive('taskList') }">
+        <Icon :name="toolsIcons.taskList" :size="18" />
+      </button>
+      <button @click="editor.chain().focus().toggleHighlight().run()" title="高亮"
+        :class="{ 'is-active': editor.isActive('highlight') }">
+        <Icon :name="toolsIcons.textHilite" :size="18" />
       </button>
     </div>
   </floating-menu>

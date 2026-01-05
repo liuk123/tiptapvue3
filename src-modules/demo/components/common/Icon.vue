@@ -1,5 +1,5 @@
 <template>
-  <span class="icon" :style="{ '--t-icon': `url(${src})` }" v-if="src">
+  <span class="icon" :style="{ '--t-icon': `url(${src})`, '--t-icon-size': `${props.size}px` }" v-if="src">
   </span>
 </template>
 
@@ -8,9 +8,10 @@ import { defineProps } from 'vue'
 
 const props = defineProps({
   name: { type: String, required: true },
+  size: { type: Number, default: 18 },
 })
 
-const src = require(`../../assets/icons/${props.name || ''}.svg`)
+const src = require(`../../assets/icons/${props.name}.svg`)
 
 </script>
 
@@ -20,7 +21,7 @@ const src = require(`../../assets/icons/${props.name || ''}.svg`)
   display: inline-block;
   inline-size: 1em;
   block-size: 1em;
-  font-size: 1.5rem;
+  font-size: var(--t-icon-size);
   flex-shrink: 0;
   vertical-align: middle;
   box-sizing: border-box;

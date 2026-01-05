@@ -7,7 +7,7 @@
         :key="index"
         @click="selectItem(index)"
       >
-        {{ item.title }}
+        <Icon :name="item.icon" :size="18" />
       </button>
     </template>
     <div class="item" v-else>No result</div>
@@ -15,7 +15,9 @@
 </template>
 
 <script>
+import Icon from '../../../common/Icon.vue'
 export default {
+  components: { Icon },
   props: {
     items: {
       type: Array,
