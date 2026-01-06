@@ -348,7 +348,7 @@ const editor = useEditor({
           }
         })
       },
-    }),
+    })
   ],
   editorProps: {
     attributes: {

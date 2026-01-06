@@ -28,21 +28,17 @@
     </button>
   </bubble-menu>
 
-  <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" :should-show="shouldShowColumnsMenu" v-if="editor"
-    class="bubble-menu">
-    <div style="display:flex;align-items:center;gap:8px;padding:2px 4px;">
-      <label>列</label>
-      <button @click="decreaseCols">-</button>
-      <button @click="increaseCols">+</button>
-      <label>行</label>
-      <button @click="decreaseRows">-</button>
-      <button @click="increaseRows">+</button>
-    </div>
-  </bubble-menu>
-
   <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" :should-show="shouldShowColumnMenu" v-if="editor"
     class="bubble-menu">
     <div style="display:flex;align-items:center;gap:8px;padding:2px 4px;">
+      <template v-if="editor.isActive('columns')">
+        <label>列</label>
+        <button @click="decreaseCols">-</button>
+        <button @click="increaseCols">+</button>
+        <label>行</label>
+        <button @click="decreaseRows">-</button>
+        <button @click="increaseRows">+</button>
+      </template>
       <label>背景</label>
       <input type="color" :value="columnBackground" @input="onColumnColor($event.target.value)" />
     </div>
@@ -142,7 +138,7 @@ const shouldShowColumnsMenu = ({ editor }) => {
 }
 
 const shouldShowColumnMenu = ({ editor }) => {
-  return editor.isActive('column')
+  return editor.isActive('column') || editor.isActive('columns')
 }
 
 const editImage = () => {

@@ -1,4 +1,5 @@
 import { Node, mergeAttributes } from '@tiptap/core'
+const defaultColor = '#ff000009'
 
 export default Node.create({
   name: 'column',
@@ -9,8 +10,8 @@ export default Node.create({
   addAttributes() {
     return {
       background: {
-        default: 'transparent',
-        parseHTML: element => element.getAttribute('data-background') || 'transparent',
+        default: defaultColor,
+        parseHTML: element => element.getAttribute('data-background') || defaultColor,
         renderHTML: attributes => ({ 'data-background': attributes.background }),
       },
     }
@@ -25,7 +26,11 @@ export default Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const style = [`background:${HTMLAttributes.background ?? 'transparent'}`].join(';')
+    const bg = HTMLAttributes['data-background'] ?? HTMLAttributes.background ?? defaultColor
+    const style = [
+      `background:${bg}`, 
+      'border-radius: 4px',
+    ].join(';')
     return [
       'div',
       mergeAttributes({

@@ -48,18 +48,15 @@ export default Node.create({
     const attrs = {
       cols: HTMLAttributes.cols ?? 2,
       rows: HTMLAttributes.rows ?? 1,
-      gap: HTMLAttributes.gap ?? 8,
-      padding: HTMLAttributes.padding ?? 8,
-      radius: HTMLAttributes.radius ?? 6,
     }
 
     const style = [
       'display:grid',
       `grid-template-columns:repeat(${attrs.cols}, 1fr)`,
       `grid-template-rows:repeat(${attrs.rows}, auto)`,
-      `gap:${attrs.gap}px`,
-      `padding:${attrs.padding}px`,
-      `border-radius:${attrs.radius}px`,
+      `gap:8px`,
+      `padding:8px`,
+      `border-radius:4px`,
     ].join(';')
 
     return [
