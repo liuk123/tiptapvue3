@@ -114,8 +114,8 @@
     </div>
 
     <!-- 编辑器内容区域 -->
-    <editor-bubble-menu :editor="editor" />
-    <drag-handle :editor="editor">
+    <editor-bubble-menu :editor="editor"/>
+    <drag-handle :editor="editor" @click="console.log('drag-handle click')">
       <div class="custom-drag-handle" />
     </drag-handle>
     <editor-content :editor="editor" class="editor-content" />
@@ -131,6 +131,7 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount, computed, defineProps, watch } from 'vue'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
@@ -147,7 +148,6 @@ import OrderedList from '@tiptap/extension-ordered-list'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import HardBreak from '@tiptap/extension-hard-break'
 import Link from '@tiptap/extension-link'
-import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
 import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
@@ -159,19 +159,19 @@ import BubbleMenu from '@tiptap/extension-bubble-menu'
 import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCaret from '@tiptap/extension-collaboration-caret'
 import CharacterCount from '@tiptap/extension-character-count'
-import EditorBubbleMenu from './components/EditorBubbleMenu.vue'
-import Icon from '../common/Icon.vue'
-import { toolsIcons } from './token/tools-icons.js'
-import Commands from './components/slash/commands.js'
-import suggestion from './components/slash/suggestion.js'
-
-import { ref, onMounted, onBeforeUnmount, computed, defineProps, watch } from 'vue'
 import DragHandle from '@tiptap/extension-drag-handle-vue-3'
 import FileHandler from '@tiptap/extension-file-handler'
 import { Gapcursor } from '@tiptap/extensions'
 import Typography from '@tiptap/extension-typography'
 import NodeRange from '@tiptap/extension-node-range'
 import { Dropcursor } from '@tiptap/extensions'
+
+import CustomImage from './components/customImage.js'
+import EditorBubbleMenu from './components/EditorBubbleMenu.vue'
+import Icon from '../common/Icon.vue'
+import { toolsIcons } from './token/tools-icons.js'
+import Commands from './components/slash/commands.js'
+import suggestion from './components/slash/suggestion.js'
 
 
 // Props 定义
@@ -269,11 +269,10 @@ const editor = useEditor({
       depth: 0,
       key: null,
     }),
-    Link.configure({ autolink: true, openOnClick: true, linkOnPaste: true }),
-    Image.configure({
+    Link.configure({ autolink: true, openOnClick: false, linkOnPaste: true }),
+    CustomImage.configure({
       resize: {
         enabled: true,
-        // directions: ['top', 'bottom', 'left', 'right'], // can be any direction or diagonal combination
         minWidth: 50,
         minHeight: 50,
         alwaysPreserveAspectRatio: true,

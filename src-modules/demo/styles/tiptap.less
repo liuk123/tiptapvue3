@@ -2,9 +2,10 @@
   :first-child {
     margin-top: 0;
   }
+
   ::selection {
-  background-color: #70cff850;
-}
+    background-color: #70cff850;
+  }
 
   /* Give a remote user a caret */
   .collaboration-carets__caret {
@@ -192,6 +193,7 @@
   gap: 0.25rem;
   overflow: auto;
   padding: 0.4rem;
+  overscroll-behavior: none;
 
   button {
     align-items: center;
@@ -217,7 +219,7 @@
 .ProseMirror {
   padding: 1rem 1rem 1rem 0;
 
-  > * {
+  >* {
     margin-left: 1rem;
   }
 
