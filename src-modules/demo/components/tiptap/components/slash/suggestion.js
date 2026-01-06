@@ -94,13 +94,26 @@ export default {
           editor.chain().focus().deleteRange(range).setMark('strike').run()
         },
       },
+      
       {
-        title: 'Code',
-        icon: toolsIcons.code,
+        title: 'Columns',
+        icon: toolsIcons.insertTable,
         command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).setMark('code').run()
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .insertColumns({ cols: 2, rows: 2, background: '#f9fafb' })
+            .run()
         },
       },
+      // {
+      //   title: 'Code',
+      //   icon: toolsIcons.code,
+      //   command: ({ editor, range }) => {
+      //     editor.chain().focus().deleteRange(range).setMark('code').run()
+      //   },
+      // },
       {
         title: 'BulletList',
         icon: toolsIcons.listUnOrdered,

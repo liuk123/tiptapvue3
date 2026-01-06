@@ -28,6 +28,19 @@
     </button>
   </bubble-menu>
 
+  <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" :should-show="shouldShowColumnsMenu" v-if="editor"
+    class="bubble-menu">
+    <div style="display:flex;align-items:center;gap:8px;padding:2px 4px;">
+      <label>列</label>
+      <button @click="decreaseCols">-</button>
+      <button @click="increaseCols">+</button>
+      <label>行</label>
+      <button @click="decreaseRows">-</button>
+      <button @click="increaseRows">+</button>
+      <input type="color" :value="columnsBackground" @input="onColumnsColor($event.target.value)" />
+    </div>
+  </bubble-menu>
+
   <bubble-menu v-if="editor" :editor="editor"
     :should-show="() => editor.isActive('bulletList') || editor.isActive('orderedList')"
     :get-referenced-virtual-element="() => getListVirtualElement(['bulletList', 'orderedList'])"
@@ -117,6 +130,10 @@ const shouldShowImageMenu = ({ editor }) => {
   return editor.isActive('image')
 }
 
+const shouldShowColumnsMenu = ({ editor }) => {
+  return editor.isActive('columns')
+}
+
 const editImage = () => {
   const url = window.prompt('请输入图片地址', props.editor.getAttributes('image').src)
   if (url && url.trim()) {
@@ -178,5 +195,29 @@ const toggleListType = () => {
     chain.toggleBulletList()
   }
   chain.run()
+}
+
+const getColumnsAttrs = () => {
+  return props.editor?.getAttributes('columns') || {}
+}
+const columnsBackground = getColumnsAttrs().background || '#ffffff'
+const onColumnsColor = (color) => {
+  props.editor.chain().focus().setColumnsAttrs({ background: color }).run()
+}
+const increaseCols = () => {
+  const { cols = 2, rows = 1 } = getColumnsAttrs()
+  props.editor.commands.setColumnsSize({ cols: cols + 1, rows })
+}
+const decreaseCols = () => {
+  const { cols = 2, rows = 1 } = getColumnsAttrs()
+  props.editor.commands.setColumnsSize({ cols: Math.max(1, cols - 1), rows })
+}
+const increaseRows = () => {
+  const { cols = 2, rows = 1 } = getColumnsAttrs()
+  props.editor.commands.setColumnsSize({ cols, rows: rows + 1 })
+}
+const decreaseRows = () => {
+  const { cols = 2, rows = 1 } = getColumnsAttrs()
+  props.editor.commands.setColumnsSize({ cols, rows: Math.max(1, rows - 1) })
 }
 </script>

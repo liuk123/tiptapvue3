@@ -25,6 +25,11 @@
     <!-- 编辑器工具栏 -->
     <div v-if="editor" class="control-group">
       <div class="button-group">
+        <button @click="editor.chain().focus().clearNodes().setParagraph().insertColumns({ cols: 2, rows: 2 }).run()" title="分栏"
+          :disabled="!editor.can().chain().focus().insertColumns().run()"
+          :class="{ 'is-active': editor.isActive('columns') }">
+          分栏
+        </button>
         <button @click="editor.chain().focus().toggleBold().run()" title="加粗"
           :disabled="!editor.can().chain().focus().toggleBold().run()"
           :class="{ 'is-active': editor.isActive('bold') }">
@@ -167,6 +172,8 @@ import NodeRange from '@tiptap/extension-node-range'
 import { Dropcursor } from '@tiptap/extensions'
 
 import CustomImage from './components/customImage.js'
+import Columns from './components/columns.js'
+import Column from './components/column.js'
 import EditorBubbleMenu from './components/EditorBubbleMenu.vue'
 import Icon from '../common/Icon.vue'
 import { toolsIcons } from './token/tools-icons.js'
@@ -249,6 +256,8 @@ const editor = useEditor({
   extensions: [
     Document,
     Paragraph,
+    Columns,
+    Column,
     Heading,
     Text,
     Bold,
