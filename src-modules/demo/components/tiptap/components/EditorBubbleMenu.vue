@@ -37,7 +37,14 @@
       <label>行</label>
       <button @click="decreaseRows">-</button>
       <button @click="increaseRows">+</button>
-      <input type="color" :value="columnsBackground" @input="onColumnsColor($event.target.value)" />
+    </div>
+  </bubble-menu>
+
+  <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" :should-show="shouldShowColumnMenu" v-if="editor"
+    class="bubble-menu">
+    <div style="display:flex;align-items:center;gap:8px;padding:2px 4px;">
+      <label>背景</label>
+      <input type="color" :value="columnBackground" @input="onColumnColor($event.target.value)" />
     </div>
   </bubble-menu>
 
@@ -134,6 +141,10 @@ const shouldShowColumnsMenu = ({ editor }) => {
   return editor.isActive('columns')
 }
 
+const shouldShowColumnMenu = ({ editor }) => {
+  return editor.isActive('column')
+}
+
 const editImage = () => {
   const url = window.prompt('请输入图片地址', props.editor.getAttributes('image').src)
   if (url && url.trim()) {
@@ -200,9 +211,12 @@ const toggleListType = () => {
 const getColumnsAttrs = () => {
   return props.editor?.getAttributes('columns') || {}
 }
-const columnsBackground = getColumnsAttrs().background || '#ffffff'
-const onColumnsColor = (color) => {
-  props.editor.chain().focus().setColumnsAttrs({ background: color }).run()
+const getColumnAttrs = () => {
+  return props.editor?.getAttributes('column') || {}
+}
+const columnBackground = getColumnAttrs().background || '#ffffff'
+const onColumnColor = (color) => {
+  props.editor.chain().focus().updateAttributes('column', { background: color }).run()
 }
 const increaseCols = () => {
   const { cols = 2, rows = 1 } = getColumnsAttrs()

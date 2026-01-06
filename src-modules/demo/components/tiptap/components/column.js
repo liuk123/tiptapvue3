@@ -6,23 +6,31 @@ export default Node.create({
   content: 'block+',
   selectable: true,
 
+  addAttributes() {
+    return {
+      background: {
+        default: 'transparent',
+        parseHTML: element => element.getAttribute('data-background') || 'transparent',
+        renderHTML: attributes => ({ 'data-background': attributes.background }),
+      },
+    }
+  },
+
   parseHTML() {
     return [
       {
         tag: 'div[data-type="column"]',
       },
-      {
-        tag: 'div.t-column',
-      },
     ]
   },
 
   renderHTML({ HTMLAttributes }) {
+    const style = [`background:${HTMLAttributes.background ?? 'transparent'}`].join(';')
     return [
       'div',
       mergeAttributes({
         'data-type': 'column',
-        class: 't-column',
+        style,
       }, HTMLAttributes),
       0,
     ]

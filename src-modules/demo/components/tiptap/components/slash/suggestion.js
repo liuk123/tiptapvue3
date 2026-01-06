@@ -103,7 +103,7 @@ export default {
             .chain()
             .focus()
             .deleteRange(range)
-            .insertColumns({ cols: 2, rows: 2, background: '#f9fafb' })
+            .insertColumns({ cols: 2, rows: 2 })
             .run()
         },
       },

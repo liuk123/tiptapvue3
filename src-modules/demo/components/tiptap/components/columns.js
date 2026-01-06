@@ -23,11 +23,6 @@ export default Node.create({
         parseHTML: element => Number(element.getAttribute('data-gap')) || 8,
         renderHTML: attributes => ({ 'data-gap': attributes.gap }),
       },
-      background: {
-        default: 'transparent',
-        parseHTML: element => element.getAttribute('data-background') || 'transparent',
-        renderHTML: attributes => ({ 'data-background': attributes.background }),
-      },
       padding: {
         default: 8,
         parseHTML: element => Number(element.getAttribute('data-padding')) || 8,
@@ -45,10 +40,7 @@ export default Node.create({
     return [
       {
         tag: 'div[data-type="columns"]',
-      },
-      {
-        tag: 'div.t-columns',
-      },
+      }
     ]
   },
 
@@ -57,7 +49,6 @@ export default Node.create({
       cols: HTMLAttributes.cols ?? 2,
       rows: HTMLAttributes.rows ?? 1,
       gap: HTMLAttributes.gap ?? 8,
-      background: HTMLAttributes.background ?? 'transparent',
       padding: HTMLAttributes.padding ?? 8,
       radius: HTMLAttributes.radius ?? 6,
     }
@@ -67,7 +58,6 @@ export default Node.create({
       `grid-template-columns:repeat(${attrs.cols}, 1fr)`,
       `grid-template-rows:repeat(${attrs.rows}, auto)`,
       `gap:${attrs.gap}px`,
-      `background:${attrs.background}`,
       `padding:${attrs.padding}px`,
       `border-radius:${attrs.radius}px`,
     ].join(';')
@@ -76,7 +66,6 @@ export default Node.create({
       'div',
       mergeAttributes({
         'data-type': 'columns',
-        class: 't-columns',
         style,
       }, HTMLAttributes),
       0,
